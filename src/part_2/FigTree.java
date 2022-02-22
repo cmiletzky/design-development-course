@@ -24,11 +24,14 @@ public class FigTree extends Tree {
     @Override
     public String toString() {
         // TODO: Implement.
+        String its_leaves = "and I have no leaves";
+        if (has_leaves)
+            its_leaves = " and my color is: "
+                    + this.leavesColor;
         return "Fig tree. "
                 +"My height is: "
                 + this.height
-                + " and my color is: "
-                + this.leavesColor
+                + " "+ its_leaves
                 +"\n";
     }
     @Override
@@ -47,14 +50,17 @@ public class FigTree extends Tree {
                 this.height = (int)(20 + this.height);
                 this.has_leaves = false;
                 this.has_fruit = false;
+                break;
             case SPRING:
                 this.height = (int)(30 + this.height);
                 this.has_fruit = false;
+                break;
             case SUMMER:
                 this.height = (int)(30 + this.height);
                 this.has_fruit = true;
+                break;
             case FALL:
-                this.height = (int)(30 + this.height);
+                this.height = (int)(20 + this.height);
                 this.has_fruit = false;
         }
 

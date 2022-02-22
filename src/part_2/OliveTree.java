@@ -37,13 +37,17 @@ public class OliveTree extends Tree {
             case WINTER :
                 this.height = (int)(5 + this.height);
                 this.has_fruit = false;
+                break;
             case SPRING:
                 this.height = (int)(10 + this.height);
+                break;
             case SUMMER:
                 this.height = (int)(10 + this.height);
+                break;
             case FALL:
                 this.height = (int)(5 + this.height);
                 this.has_fruit = true;
+                break;
         }
     }
 }
