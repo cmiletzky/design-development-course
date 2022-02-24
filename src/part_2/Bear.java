@@ -12,8 +12,8 @@ public class Bear extends Animal {
     @Override
     public String toString() {
         // TODO: Implement.
-
-        return this.name + ". " + "My weight is: "
+        String sleeping = is_sleeping ? "I am sleeping. " : "";
+        return this.name + ". "+ sleeping + "My weight is: "
                 + this.weight
                 + " and my color is: "
                 + this.color
@@ -37,16 +37,16 @@ public class Bear extends Animal {
 //                הדב בצבע חום בכל עונות השנה.
         switch (this.getCurrentSeason()){
             case WINTER:
-                this.weight = (int)(0.8 * this.weight);
+                this.weight *= 0.8;
                 break;
             case SPRING:
-                this.weight = (int)(0.75 * this.weight);
+                this.weight *= 0.75;
                 break;
             case SUMMER:
-                this.weight = (int)(((4/3) * this.weight));
+                this.weight *= (float)(4/3);
                 break;
             case FALL:
-                this.weight = (int)(1.25 * this.weight);
+                this.weight *=1.25;
 
 
 

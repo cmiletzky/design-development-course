@@ -11,6 +11,7 @@ public class FigTree extends Tree {
         // TODO: Implement.
         super(height,season,null);
         has_leaves = get_leaves();
+        has_fruit = get_fruit();
         this.leavesColor = color_by_season();
     }
 
@@ -25,15 +26,16 @@ public class FigTree extends Tree {
     @Override
     public String toString() {
         // TODO: Implement.
-        String its_leaves = " and I have no leaves";
-        if (has_leaves)
-            its_leaves = " and my color is: "
-                    + this.leavesColor;
-        return "Fig tree. "
+        String its_leaves = has_leaves ? " and my color is: " + this.leavesColor : " and I have no leaves",
+                fruit = has_fruit ? "I give fruit. " : "";
+        return "Fig tree. " + fruit
                 +"My height is: "
                 + this.height
                 + its_leaves
                 +"\n";
+    }
+    public boolean get_fruit(){
+        return season == Season.SUMMER;
     }
     public boolean get_leaves(){
         return  season != Season.WINTER;
@@ -49,23 +51,20 @@ public class FigTree extends Tree {
 
         super.changeSeason();
         this.leavesColor = color_by_season();
+        has_fruit = get_fruit();
         has_leaves = get_leaves();
         switch (this.getCurrentSeason()){
             case WINTER :
                 this.height +=20;
-                this.has_fruit = false;
                 break;
             case SPRING:
                 this.height +=30;
-                this.has_fruit = false;
                 break;
             case SUMMER:
                 this.height += 30;
-                this.has_fruit = true;
                 break;
             case FALL:
                 this.height += 20 ;
-                this.has_fruit = false;
         }
 
 
