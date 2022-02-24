@@ -7,6 +7,7 @@ public class OliveTree extends Tree {
     OliveTree(int height, Season season) {
         // TODO: Implement.
         super(height,season,Color.GREEN);
+        has_fruit = get_fruit();
     }
 
     @Override
@@ -16,13 +17,16 @@ public class OliveTree extends Tree {
         if (this.has_fruit)
             gives_fruit = "I give fruit. ";
 
-        return "Olive tree."
+        return "Olive tree. "
                 + gives_fruit
                 + "My height is: "
                 + this.height
                 +" and my color is: "
                 + Color.GREEN
                 +"\n";
+    }
+    public boolean get_fruit(){
+        return season == Season.FALL;
     }
     @Override
     public void changeSeason() {
@@ -33,20 +37,19 @@ public class OliveTree extends Tree {
 //        בסתיו: גובהו של העץ עולה ב-5 ס"מ והזית נותן פרי.
 
         super.changeSeason();
+        has_fruit = get_fruit();
         switch (this.getCurrentSeason()){
             case WINTER :
-                this.height = (int)(5 + this.height);
-                this.has_fruit = false;
+                this.height +=5;
                 break;
             case SPRING:
-                this.height = (int)(10 + this.height);
+                this.height += 10;
                 break;
             case SUMMER:
-                this.height = (int)(10 + this.height);
+                this.height += 10;
                 break;
             case FALL:
-                this.height = (int)(5 + this.height);
-                this.has_fruit = true;
+                this.height += 5;
                 break;
         }
     }
