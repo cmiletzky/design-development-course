@@ -1,4 +1,4 @@
-package part_2;
+package exer_1.part_2;
 
 public class Caribou extends Animal {
     // 1= migrate to north, 0= migrate to south

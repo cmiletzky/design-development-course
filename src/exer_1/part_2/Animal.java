@@ -1,4 +1,4 @@
-package part_2;
+package exer_1.part_2;
 import java.lang.Comparable;
 
 public abstract class Animal implements Seasonable,Comparable{

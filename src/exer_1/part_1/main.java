@@ -1,4 +1,4 @@
-package part_1;
+package exer_1.part_1;
 
 public class main {
 

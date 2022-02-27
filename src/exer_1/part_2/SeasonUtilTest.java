@@ -1,4 +1,4 @@
-package part_2;
+package exer_1.part_2;
 
 import java.util.Random;
 import java.util.Scanner;

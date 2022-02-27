@@ -1,7 +1,4 @@
-package part_2;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+package exer_1.part_2;
 
 import static java.util.Arrays.sort;
 

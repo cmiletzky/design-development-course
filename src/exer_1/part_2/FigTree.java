@@ -1,6 +1,4 @@
-package part_2;
-
-import part_1.C;
+package exer_1.part_2;
 
 public class FigTree extends Tree {
 
