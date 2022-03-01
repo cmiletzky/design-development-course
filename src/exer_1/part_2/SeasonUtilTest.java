@@ -31,6 +31,7 @@ public class SeasonUtilTest {
             seasonables[2*i] = animals[i];
             seasonables[2*i+1] = trees[i];
         }
+        SeasonUtil.sortSeasonable((Comparable[]) seasonables);
 
         System.out.println("\n---All together---\n");
         System.out.println(SeasonUtil.reportAll(seasonables));
