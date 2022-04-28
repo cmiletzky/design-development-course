@@ -1,4 +1,4 @@
-package exer5.DL;
+package exer5;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -28,7 +28,7 @@ public class DataSource {
             allOrders = readOrdersfromFile();
             allProducts = readProductsfromFile();
             allOrderProducts = readOrderProductsfromFile();
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException e) {System.out.println(e+"31234123"); }
     }
     public static List<Customer> readCustomersfromFile() throws IOException {
         return Files.lines(Paths.get(customersPath))

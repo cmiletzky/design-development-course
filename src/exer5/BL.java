@@ -1,17 +1,7 @@
-package exer5.BL;
+package exer5;
 
-import exer5.DL.Customer;
-import exer5.DL.Order;
-import exer5.DL.Product;
-import exer5.DL.ProductCategory;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import exer5.DL.*;
-
-public class BLIMP implements IBL {
+public class BL implements IBL {
   
 
 

@@ -1,5 +1,0 @@
-ID: 203077326
-NAME: Chaim Miletzky
-
-ID: 318168515
-NAME: Yonatan Tamir

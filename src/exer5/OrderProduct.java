@@ -1,4 +1,4 @@
-package exer5.DL;
+package exer5;
 
 import static java.lang.Long.parseLong;
 
