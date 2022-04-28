@@ -1,7 +1,8 @@
-
+package exer5.DL;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,23 +31,27 @@ public class DataSource {
         } catch (IOException e) { e.printStackTrace(); }
     }
     public static List<Customer> readCustomersfromFile() throws IOException {
-         //To Do
-        return null;
+        return Files.lines(Paths.get(customersPath))
+                .map(Customer::new)
+                .collect(Collectors.toList());
    }
 
     public static List<Order> readOrdersfromFile() throws IOException {
-        //To Do
-        return null;
+        return Files.lines(Paths.get(ordersPath))
+                .map(Order::new)
+                .collect(Collectors.toList());
     }
 
     public static List<Product> readProductsfromFile() throws IOException {
-        //To Do
-        return null;
+        return Files.lines(Paths.get(productsPath))
+                .map(Product::new)
+                .collect(Collectors.toList());
     }
 
     public static List<OrderProduct> readOrderProductsfromFile() throws IOException {
-        //To Do
-        return null;
+        return Files.lines(Paths.get(orderProductPath))
+                .map(OrderProduct::new)
+                .collect(Collectors.toList());
     }
 }
 

@@ -5,87 +5,143 @@ import exer5.DL.Order;
 import exer5.DL.Product;
 import exer5.DL.ProductCategory;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import exer5.DL.*;
 
 public class BLIMP implements IBL {
-   private static DataSource ds=null;
-   private static final String path="..\\data\\";
-   private BLIMP(String path){
-       if(ds==null)
-           ds=new DataSource(path);
-   }
+  
 
 
 
 
     @Override
     public Product getProductById(long productId) {
-        return ds.getProducts().stream().filter((x)->x.getProductId()==productId).findFirst().orElse(null);
+        return DataSource.allProducts.stream().filter((x)->x.getProductId()==productId).findFirst().orElse(null);
     }
 
     @Override
     public Order getOrderById(long orderId) {
-        return ds.getOrders().stream().filter((x)->x.getOrderId()==orderId).findFirst().orElse(null);
+        return DataSource.allOrders.stream().filter((x)->x.getOrderId()==orderId).findFirst().orElse(null);
     }
 
     @Override
     public Customer getCustomerById(long customerId) {
-        return ds.getCustomers().stream().filter((x)->x.getId()==customerId).findFirst().orElse(null);
+        return DataSource.allCustomers.stream().filter((x)->x.getId()==customerId).findFirst().orElse(null);
     }
 
     @Override
     public List<Product> getProducts(ProductCategory cat, double price) {
-        return ds.getProducts().stream().filter((x)->(x.getPrice()<=price && x.getCategory()==cat))
+        return DataSource.allProducts.stream().filter((x)->(x.getPrice()<=price && x.getCategory()==cat))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Customer> popularCustomers() {
-        return  ds.getCustomers().stream().filter((x)->(x.getTier()==3 && (ds.getOrders().stream().filter((y)->y.getCustomrId()== x.getId()).count()>=10)))
+        return  DataSource.allCustomers.stream()
+                .filter((x)->(x.getTier()==3 && (DataSource.allOrders.stream().filter((y)->y.getCustomrId()== x.getId()).count()>=10)))
+                .sorted(Comparator.comparingLong(Customer::getId))
                 .toList();
     }
 
     @Override
     public List<Order> getCustomerOrders(long customerId) {
-       return ds.getOrders()
+       return DataSource.allOrders.stream().filter((x)->x.getCustomrId()==customerId)
+               .sorted(Comparator.comparingLong(Order::getOrderId))
+               .toList();
 
     }
 
     @Override
     public long numberOfProductInOrder(long orderId) {
-        return 0;
+        return DataSource.allOrderProducts.stream().filter((x)->x.getOrderId()==orderId)
+                .mapToLong(OrderProduct::getQuantity)
+                .reduce(0, Long::sum);
+
     }
 
     @Override
     public List<Product> getPopularOrderedProduct(int orderedtimes) {
-        return null;
+        return DataSource.allProducts.stream()
+                .filter(
+                        (x)->(DataSource.allOrderProducts.stream()
+                                .filter((y)->y.getProductId()==x.getProductId())
+                                .count()>=orderedtimes)
+                        )
+                .sorted(Comparator.comparingLong(Product::getProductId))
+                .toList();
     }
 
     @Override
     public List<Product> getOrderProducts(long orderId) {
-        return null;
+        return DataSource.allOrderProducts.stream().filter((x)->x.getOrderId()==orderId)
+                .map((x)->getProductById(x.getProductId()))
+                .toList();
+
     }
 
     @Override
     public Product getMaxOrderedProduct() {
-        return null;
+        return DataSource.allProducts.stream()
+                .max(
+                                Comparator.comparing((x)->(DataSource.allOrderProducts.stream()
+                                .filter((y)->(y.getProductId()==x.getProductId())).count()))
+                            )
+                .orElse(null);
     }
 
     @Override
     public List<Customer> getCustomersWhoOrderedProduct(long productId) {
-        return null;
+        return DataSource.allCustomers.stream().
+                filter(
+                        (x)->(DataSource.allOrderProducts.stream()
+                                .filter((y)->(y.getProductId()==productId))
+                                .count()>0)
+                        )
+                .sorted(Comparator.comparingLong(Customer::getId))
+                .toList();
+    }
+
+    @Override
+    public double sumOfOrder(long orderID) {
+        return DataSource.allOrderProducts.stream()
+                .filter((x)->x.getOrderId()==orderID)
+                .map((x)->(
+                        (x.getQuantity())*(getProductById(x.getProductId()).getPrice()))
+                            )
+                .reduce(0.0,Double::sum);
     }
 
     @Override
     public List<Order> getExpensiveOrders(double price) {
-        return null;
+        return DataSource.allOrders.stream()
+                .filter((x)->(sumOfOrder(x.getOrderId())>price))
+                .sorted(Comparator.comparingLong(Order::getOrderId))
+                .toList();
     }
 
     @Override
     public List<Customer> ThreeTierCustomerWithMaxOrders() {
-        return null;
+        long max = max_orders();
+        return DataSource.allCustomers.stream()
+                .filter(
+                        (x)->((x.getTier() == 3) &&(get_customer_orders(x.getId()) ==max))
+                        )
+                .toList();
+    }
+
+    private long max_orders(){
+        return DataSource.allCustomers.stream()
+                .mapToLong(
+                        (x)->(get_customer_orders(x.getId()))
+                        )
+                .max()
+                .orElse(-1);
+    }
+
+    private long get_customer_orders(long id){
+        return getCustomerOrders(id).size();
     }
 }

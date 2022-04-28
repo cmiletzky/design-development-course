@@ -18,6 +18,7 @@ public interface IBL {
     List<Product> getOrderProducts(long orderId);
     Product getMaxOrderedProduct();
     List<Customer> getCustomersWhoOrderedProduct (long productId);
+    double sumOfOrder(long orderID);
     List<Order> getExpensiveOrders(double price);
     List<Customer> ThreeTierCustomerWithMaxOrders();
 
