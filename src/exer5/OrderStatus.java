@@ -1,4 +1,4 @@
-package exer5.DL;
+package exer5;
 
 public enum OrderStatus {
     AwaitingPayment, Processing, Pickup, Complete, Cancelled

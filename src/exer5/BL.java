@@ -1,8 +1,14 @@
 package exer5;
 
 
+
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class BL implements IBL {
-  
+
 
 
 
@@ -33,14 +39,14 @@ public class BL implements IBL {
         return  DataSource.allCustomers.stream()
                 .filter((x)->(x.getTier()==3 && (DataSource.allOrders.stream().filter((y)->y.getCustomrId()== x.getId()).count()>=10)))
                 .sorted(Comparator.comparingLong(Customer::getId))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Order> getCustomerOrders(long customerId) {
-       return DataSource.allOrders.stream().filter((x)->x.getCustomrId()==customerId)
-               .sorted(Comparator.comparingLong(Order::getOrderId))
-               .toList();
+        return DataSource.allOrders.stream().filter((x)->x.getCustomrId()==customerId)
+                .sorted(Comparator.comparingLong(Order::getOrderId))
+                .collect(Collectors.toList());
 
     }
 
@@ -59,16 +65,16 @@ public class BL implements IBL {
                         (x)->(DataSource.allOrderProducts.stream()
                                 .filter((y)->y.getProductId()==x.getProductId())
                                 .count()>=orderedtimes)
-                        )
+                )
                 .sorted(Comparator.comparingLong(Product::getProductId))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Product> getOrderProducts(long orderId) {
         return DataSource.allOrderProducts.stream().filter((x)->x.getOrderId()==orderId)
                 .map((x)->getProductById(x.getProductId()))
-                .toList();
+                .collect(Collectors.toList());
 
     }
 
@@ -76,9 +82,9 @@ public class BL implements IBL {
     public Product getMaxOrderedProduct() {
         return DataSource.allProducts.stream()
                 .max(
-                                Comparator.comparing((x)->(DataSource.allOrderProducts.stream()
+                        Comparator.comparing((x)->(DataSource.allOrderProducts.stream()
                                 .filter((y)->(y.getProductId()==x.getProductId())).count()))
-                            )
+                )
                 .orElse(null);
     }
 
@@ -89,9 +95,9 @@ public class BL implements IBL {
                         (x)->(DataSource.allOrderProducts.stream()
                                 .filter((y)->(y.getProductId()==productId))
                                 .count()>0)
-                        )
+                )
                 .sorted(Comparator.comparingLong(Customer::getId))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -100,7 +106,7 @@ public class BL implements IBL {
                 .filter((x)->x.getOrderId()==orderID)
                 .map((x)->(
                         (x.getQuantity())*(getProductById(x.getProductId()).getPrice()))
-                            )
+                )
                 .reduce(0.0,Double::sum);
     }
 
@@ -109,7 +115,7 @@ public class BL implements IBL {
         return DataSource.allOrders.stream()
                 .filter((x)->(sumOfOrder(x.getOrderId())>price))
                 .sorted(Comparator.comparingLong(Order::getOrderId))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -118,15 +124,15 @@ public class BL implements IBL {
         return DataSource.allCustomers.stream()
                 .filter(
                         (x)->((x.getTier() == 3) &&(get_customer_orders(x.getId()) ==max))
-                        )
-                .toList();
+                )
+                .collect(Collectors.toList());
     }
 
     private long max_orders(){
         return DataSource.allCustomers.stream()
                 .mapToLong(
                         (x)->(get_customer_orders(x.getId()))
-                        )
+                )
                 .max()
                 .orElse(-1);
     }

@@ -9,7 +9,10 @@ public class OrderProduct {
 
     public OrderProduct(String orderInfo)
     {
-        //To Do
+        String[] linedata = orderInfo.split(" ");
+        orderId =Long.parseLong(linedata[2]);
+        productId = Long.parseLong(linedata[5]);
+        quantity = Integer.parseInt(linedata[7]);
     }
 
     public OrderProduct(long oId, long pId, int quantity)

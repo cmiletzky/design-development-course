@@ -11,7 +11,11 @@ public class Product
 
     public Product(String orderInfo)
     {
-        //To Do
+        var linedata = orderInfo.split(" ");
+        ProductId = Long.parseLong(linedata[1]);
+        name = linedata[2];
+        category = ProductCategory.valueOf(linedata[4]);
+        price = Double.parseDouble(linedata[6]);
     }
 
     public Product(long PId, String Pname, ProductCategory Pcategory, double Pprice)

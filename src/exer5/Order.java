@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static java.lang.Long.parseLong;
+import static java.lang.Long.valueOf;
 
 public class Order {
 
@@ -12,11 +13,17 @@ public class Order {
     private Date orderDate;
     private Date deliveryDate;
     private OrderStatus status;
-
     private long customrId;
 
     public Order(String orderInfo)  {
-       //To Do
+       var linedata = orderInfo.split(" ");
+       orderId = Long.parseLong(linedata[1]);
+       var datedata = linedata[4].split("/");
+       orderDate = new Date(Integer.parseInt(datedata[2]),Integer.parseInt(datedata[1]),Integer.parseInt(datedata[0]));
+       datedata = linedata[7].split("/");
+       deliveryDate = new Date(Integer.parseInt(datedata[2]),Integer.parseInt(datedata[1]),Integer.parseInt(datedata[0]));
+       status = OrderStatus.valueOf(linedata[9]);
+       customrId = Long.parseLong(linedata[12]);
     }
 
     public Order(long Oid, Date OorderDate, Date OdeliveryDate, OrderStatus Ostatus, long OcustomrId)

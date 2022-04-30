@@ -15,7 +15,7 @@ public class DataSource {
     public static List<Product> allProducts;
     public static List<OrderProduct> allOrderProducts;
     // Update this path according to your data files location
-    public static String basePath = "..\\data\\";
+    public static String basePath = "C:\\Users\\Chuck\\IdeaProjects\\itsuvVetichnut\\src\\exer5\\";
     public static String customersPath = basePath +"customers.txt";
     public static String ordersPath = basePath +"orders.txt";
     public static String productsPath = basePath +"products.txt";
@@ -28,7 +28,7 @@ public class DataSource {
             allOrders = readOrdersfromFile();
             allProducts = readProductsfromFile();
             allOrderProducts = readOrderProductsfromFile();
-        } catch (IOException e) {System.out.println(e+"31234123"); }
+        } catch (IOException e) {System.out.println(e+"\nFILE PATH:\n"+customersPath); }
     }
     public static List<Customer> readCustomersfromFile() throws IOException {
         return Files.lines(Paths.get(customersPath))

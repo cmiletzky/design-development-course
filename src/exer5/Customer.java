@@ -1,47 +1,60 @@
 package exer5;
 
+
+
+
+      import static java.lang.Integer.parseInt;
+      import static java.lang.Long.parseLong;
+
 public class Customer {
-    long id;
-    String name;
-    short tier;
+    private long id;
+    private String name;
+    private int tier;
 
+    public Customer(String customerInfo)
+    {
 
+        var linedata = customerInfo.split(" ");
 
-    public Customer(){
-        id = -1;
-        name = null;
-        tier = -1;
-    }
-    public Customer(String line){
+        id = Long.parseLong(linedata[1]);
+        name = linedata[3];
+        tier = Integer.parseInt( linedata[5]);
 
-      var linedata = line.split(" ");
-
-      id = Long.parseLong(linedata[0].split(":")[1]);
-      name = linedata[1].split(":")[1].trim();
-      tier = Short.parseShort( linedata[2].split(":")[1].trim());
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Customer(long Cid,String Cname, int Ctier)
+    {
+        setId(Cid);
+        setName(Cname);
+        setTier(Ctier);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setTier(short tier) {
-        this.tier = tier;
+    public String toString()
+    {
+        return "customer: "+ getId() + " name: "+ getName() +" tier: "+ getTier()+"\n";
     }
 
     public long getId() {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
-    public short getTier() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getTier() {
         return tier;
+    }
+
+    public void setTier(int tier) {
+        this.tier = tier;
     }
 }

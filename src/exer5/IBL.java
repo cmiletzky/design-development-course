@@ -1,8 +1,7 @@
 package exer5;
 
 
-
-
+import java.util.List;
 
 public interface IBL {
     Product getProductById(long productId);
