@@ -1,3 +1,5 @@
+package exer7;
+
 public class PptxFileDetails extends FileDetails {
     private int slides;
     private int size;
@@ -14,4 +16,7 @@ public class PptxFileDetails extends FileDetails {
     public int getSize() {
         return size;
     }
+
+    @Override
+    public void accept(FileVisitor visitor){visitor.visit(this);}
 }

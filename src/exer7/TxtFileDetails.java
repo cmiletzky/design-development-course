@@ -1,3 +1,5 @@
+package exer7;
+
 public class TxtFileDetails extends FileDetails {
     private int words;
     private int size;
@@ -13,4 +15,7 @@ public class TxtFileDetails extends FileDetails {
     public int getSize() {
         return size;
     }
+
+    @Override
+    public void accept(FileVisitor visitor){visitor.visit(this);}
 }

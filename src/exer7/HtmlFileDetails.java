@@ -1,3 +1,5 @@
+package exer7;
+
 public class HtmlFileDetails extends FileDetails {
     private int lines;
     private int size;
@@ -22,4 +24,7 @@ public class HtmlFileDetails extends FileDetails {
     public void setSize(int size) {
         this.size = size;
     }
+
+    @Override
+    public void accept(FileVisitor visitor){visitor.visit(this);}
 }

@@ -1,3 +1,5 @@
+package exer7;
+
 public class DocxFileDetails extends FileDetails {
     private int words;
     private int pages;
@@ -21,4 +23,7 @@ public class DocxFileDetails extends FileDetails {
     public int getSize() {
         return size;
     }
+
+    @Override
+    public void accept(FileVisitor visitor){visitor.visit(this);}
 }
