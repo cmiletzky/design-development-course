@@ -1,5 +1,6 @@
 package exer5;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,13 +16,27 @@ public class Order {
     private OrderStatus status;
     private long customrId;
 
-    public Order(String orderInfo)  {
-       var linedata = orderInfo.split(" ");
-       orderId = Long.parseLong(linedata[1]);
-       var datedata = linedata[4].split("/");
-       orderDate = new Date(Integer.parseInt(datedata[2]),Integer.parseInt(datedata[1]),Integer.parseInt(datedata[0]));
-       datedata = linedata[7].split("/");
-       deliveryDate = new Date(Integer.parseInt(datedata[2]),Integer.parseInt(datedata[1]),Integer.parseInt(datedata[0]));
+    public Order(String orderInfo) {
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        String[] linedata = orderInfo.split(" ");
+        orderId = Long.parseLong(linedata[1]);
+        try{
+            orderDate = format.parse(linedata[4]);
+
+        }
+        catch (Exception e)
+        {
+            orderDate = null;
+        }
+        try{
+            deliveryDate =format.parse(linedata[7]);
+
+        }
+        catch (Exception e)
+        {
+            deliveryDate = null;
+        }
+
        status = OrderStatus.valueOf(linedata[9]);
        customrId = Long.parseLong(linedata[12]);
     }

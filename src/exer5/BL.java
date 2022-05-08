@@ -37,7 +37,7 @@ public class BL implements IBL {
     @Override
     public List<Customer> popularCustomers() {
         return  DataSource.allCustomers.stream()
-                .filter((x)->(x.getTier()==3 && (DataSource.allOrders.stream().filter((y)->y.getCustomrId()== x.getId()).count()>=10)))
+                .filter((x)->(x.getTier()==3 && (DataSource.allOrders.stream().filter((y)->y.getCustomrId()== x.getId()).count()>10)))
                 .sorted(Comparator.comparingLong(Customer::getId))
                 .collect(Collectors.toList());
     }
@@ -53,8 +53,7 @@ public class BL implements IBL {
     @Override
     public long numberOfProductInOrder(long orderId) {
         return DataSource.allOrderProducts.stream().filter((x)->x.getOrderId()==orderId)
-                .mapToLong(OrderProduct::getQuantity)
-                .reduce(0, Long::sum);
+                .count();
 
     }
 
@@ -73,6 +72,7 @@ public class BL implements IBL {
     @Override
     public List<Product> getOrderProducts(long orderId) {
         return DataSource.allOrderProducts.stream().filter((x)->x.getOrderId()==orderId)
+                .sorted(Comparator.comparingLong(OrderProduct::getProductId))
                 .map((x)->getProductById(x.getProductId()))
                 .collect(Collectors.toList());
 
@@ -90,11 +90,18 @@ public class BL implements IBL {
 
     @Override
     public List<Customer> getCustomersWhoOrderedProduct(long productId) {
-        return DataSource.allCustomers.stream().
-                filter(
-                        (x)->(DataSource.allOrderProducts.stream()
-                                .filter((y)->(y.getProductId()==productId))
-                                .count()>0)
+        return DataSource.allCustomers.stream()
+                .filter(
+                        (x)->(getCustomerOrders(x.getId()).stream()
+                                .filter(
+                                        (y)->(DataSource.allOrderProducts.stream().
+                                                filter(
+                                                        (z)->(z.getProductId()==productId && z.getOrderId()==y.getOrderId())
+                                                )
+                                                .count()>0)
+                                )
+                                .count()>0
+                        )
                 )
                 .sorted(Comparator.comparingLong(Customer::getId))
                 .collect(Collectors.toList());
